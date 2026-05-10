@@ -2,7 +2,7 @@ name: Hugo Deploy
 
 on:
   push:
-    branches: [ "dev/ini_pj", "main" ]
+    branches: [ "main" ]
   workflow_dispatch: {}
 
 jobs:

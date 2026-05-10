@@ -1,0 +1,31 @@
+baseURL = "https://your-username.github.io/"
+languageCode = "en-us"
+title = "cr_pj Blog"
+theme = "PaperMod"
+enableRobotsTXT = true
+
+[params]
+  author = "CKRao"
+  description = "A personal blog powered by Hugo + PaperMod"
+  defaultTheme = "auto" # light, dark, auto
+  # show reading time on posts
+  showReadingTime = true
+
+[params.social]
+  github = "https://github.com/CKRao"
+
+[params.comments]
+  provider = "giscus"
+
+[params.comments.giscus]
+  # Configure the following for Giscus (GitHub Discussions)
+  # Replace the placeholders below with your repository and IDs.
+  repo = "CKRao/cr_pj"
+  repoID = ""        # Giscus repo ID (leave empty to configure later)
+  category = ""      # Discussion category name
+  categoryID = ""    # Giscus category ID
+  mapping = "pathname" # or "url", "title", etc.
+  reactions = "1"
+  emitMetadata = "0"
+  theme = "light"
+  lang = "en"

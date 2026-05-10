@@ -1,0 +1,61 @@
+name: Hugo Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: {}
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.115.0'
+
+      - name: Build
+        # Capture stdout/stderr to a log file for upload as artifact
+        run: |
+          set -o pipefail
+          hugo --minify 2>&1 | tee hugo-build.log
+
+      - name: Deploy to gh-pages
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+
+      - name: Upload Hugo build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hugo-build-log
+          path: hugo-build.log
+
+      - name: Archive public directory (if exists)
+        if: always()
+        run: |
+          if [ -d public ]; then
+            tar -czf public.tar.gz public
+            echo "PUBLIC_ARCHIVE=public.tar.gz" >> $GITHUB_ENV
+          else
+            echo "No public directory to archive"
+          fi
+
+      - name: Upload public artifact
+        if: env.PUBLIC_ARCHIVE != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-site
+          path: ${{ env.PUBLIC_ARCHIVE }}

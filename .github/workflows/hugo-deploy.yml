@@ -13,15 +13,23 @@ jobs:
         with:
           submodules: true
 
-      - name: Setup Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.21'
-
       - name: Setup Hugo
+        # Use the extended Hugo binary which is required by PaperMod (SCSS/Sass)
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: '0.115.0'
+          extended: true
+
+      - name: Diagnostics (repo + submodules + hugo)
+        run: |
+          echo "=== hugo version ==="
+          hugo version || true
+          echo "\n=== git status ==="
+          git status --porcelain
+          echo "\n=== ls repo root ==="
+          ls -la
+          echo "\n=== submodule status ==="
+          git submodule status --recursive || true
 
       - name: Build
         # Capture stdout/stderr to a log file for upload as artifact

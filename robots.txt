@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: https://your-username.github.io/sitemap.xml
+Sitemap: https://CKRao.github.io/cr_pj/sitemap.xml

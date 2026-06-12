@@ -1,5 +1,24 @@
 baseURL = "https://CKRao.github.io/cr_pj/"
 locale = "en_US"
+
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 20
+
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/post/"
+    weight = 30
 title = "cr_pj Blog"
 theme = "PaperMod"
 enableRobotsTXT = true

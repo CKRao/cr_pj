@@ -3,6 +3,8 @@ name: Hugo Deploy
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    types: [ "closed" ]
   workflow_dispatch: {}
 
 # Grant the workflow explicit write permissions so the deploy step can push to gh-pages
@@ -13,6 +15,8 @@ permissions:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    # Only run the job for pushes to main, or when a Pull Request is closed and merged.
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     steps:
       - uses: actions/checkout@v4
         with:
